@@ -21,7 +21,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-3.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-4.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-5.png">
-<meta property="og:updated_time" content="2019-08-30T09:17:35.782Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-8.png">
+<meta property="og:updated_time" content="2019-08-30T09:44:54.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="azkaban 环境搭建">
 <meta name="twitter:description" content="azkaban 环境搭建，插件安装，简单demo，功能演示。 一. azkaban 环境搭建1.  azkaban 代码编译 打开 azkaban 源码地址,将代码下载下来。 1234567 ## 选择自己适合的版本，我选的 3.49.0版本，azkaban高版本与 azkaban插件(3.0)不兼容git clone https://github.com/azkaban/azkaban.gitg">
@@ -208,7 +211,7 @@
 <h3 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2. 环境准备"></a>2. 环境准备</h3><ul>
 <li>创建mysql账号及数据库</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">###创建azkaban用户</span><br><span class="line">CREATE USER &apos;azkaban&apos;@&apos;%&apos; IDENTIFIED BY &apos;******&apos;;</span><br><span class="line"></span><br><span class="line">###赋权</span><br><span class="line">GRANT ALL PRIVILEGES ON `azkaban_new`.* TO &apos;azkaban&apos;@&apos;%&apos;;</span><br><span class="line"></span><br><span class="line">###创建数据库</span><br><span class="line">CREATE DATABASE IF NOT EXISTS azkaban_new DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">###创建azkaban用户</span><br><span class="line">CREATE USER &apos;azkaban&apos;@&apos;%&apos; IDENTIFIED BY &apos;******&apos;;</span><br><span class="line"></span><br><span class="line">###赋权</span><br><span class="line">GRANT ALL PRIVILEGES ON `azkaban_new`.* TO &apos;azkaban&apos;@&apos;%&apos;;</span><br><span class="line"></span><br><span class="line">###创建数据库</span><br><span class="line">CREATE DATABASE IF NOT EXISTS azkaban_new DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">## 解压包</span><br><span class="line">tar -zxvf azkaban-db-3.49.0.tar.gz</span><br><span class="line">source azkaban-db-3.49.0/create-all-sql-3.49.0.sql</span><br></pre></td></tr></table></figure>
 <ul>
 <li>配置环境变量(/etc/profile)</li>
 </ul>
@@ -301,6 +304,15 @@
 </ul>
 <p>修改 reportalhive/plugin.properties</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">job.class=azkaban.jobtype.ReportalHiveRunner</span><br><span class="line"></span><br><span class="line">##不知道为什么,commonprivate.properties中的通用设置不好使</span><br><span class="line">hive.home=/opt/cloudera/parcels/CDH/lib/hive</span><br><span class="line">hadoop.home=/opt/cloudera/parcels/CDH/lib/hadoop</span><br><span class="line">CDH-5.15.2-1.cdh5.15.2.p0.3</span><br><span class="line"></span><br><span class="line">env.HIVE_HOME=$&#123;hive.home&#125;</span><br><span class="line">env.HIVE_AUX_JARS_PATH=$&#123;hive.aux.jars.path&#125;</span><br><span class="line"></span><br><span class="line">hive.jvm.args=-Dhive.querylog.location=. -Dhive.exec.scratchdir=/tmp/hive-$&#123;user.to.proxy&#125; -Dhive.aux.jars.path=$&#123;hive.aux.jars.path&#125;</span><br><span class="line">jobtype.global.jvm.args=$&#123;hive.jvm.args&#125;</span><br><span class="line">hive.aux.jars.path=$&#123;hive.home&#125;/aux/lib</span><br><span class="line"></span><br><span class="line">hadoop.dir.bin=$&#123;hadoop.home&#125;/bin</span><br><span class="line">hadoop.dir.conf=$&#123;hadoop.home&#125;/etc/hadoop</span><br></pre></td></tr></table></figure>
+<font color="red"> 不想编译的话可以从我的百度云盘获取：<a href="链接: https://pan.baidu.com/s/1N9mxTyT2PNG2OebFTUFJ5w">azkaban-3.49.0</a> ,提取码：9x2t</font>
+
+
+<h2 id="三-azkaban-运行"><a href="#三-azkaban-运行" class="headerlink" title="三. azkaban 运行"></a>三. azkaban 运行</h2><h3 id="1-azkaban-exec-服务启动"><a href="#1-azkaban-exec-服务启动" class="headerlink" title="1.  azkaban-exec 服务启动"></a>1.  azkaban-exec 服务启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd azkaban-exec-server-3.49.0</span><br><span class="line">sh ./bin/start-exec.sh</span><br></pre></td></tr></table></figure>
+<p>executors 表中的active 字段，修改成1。否则web服务启动会报错</p>
+<p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-6.png" alt="Alt text"></p>
+<h3 id="2-azkaban-web-服务启动"><a href="#2-azkaban-web-服务启动" class="headerlink" title="2. azkaban-web 服务启动"></a>2. azkaban-web 服务启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd azkaban-web-server-3.49.0</span><br><span class="line">sh ./bin/start-web.sh</span><br></pre></td></tr></table></figure>
+<h3 id="3-运行效果"><a href="#3-运行效果" class="headerlink" title="3. 运行效果"></a>3. 运行效果</h3><p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-7.png" alt="Alt text"></p>
+<p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-8.png" alt="Alt text"></p>
 
       
 
