@@ -158,6 +158,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-azkaban-demo-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/02/azkaban-demo-2/">azkaban 环境搭建</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/02/azkaban-demo-2/" class="archive-article-date">
+  	<time datetime="2019-09-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>azkaban 简单demo</p>
+<h2 id="一-azkaban-job简单配置"><a href="#一-azkaban-job简单配置" class="headerlink" title="一. azkaban job简单配置"></a>一. azkaban job简单配置</h2><h3 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1. 目录结构"></a>1. 目录结构</h3><p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-demo-1.png" alt="Alt text"></p>
+<ul>
+<li>lib 目录下，为java的jar包</li>
+<li>script 目录下，是shell脚本</li>
+<li>sql 目录下，是hive sql脚本</li>
+</ul>
+<h4 id="1-1-az-hive-01-job"><a href="#1-1-az-hive-01-job" class="headerlink" title="1.1. az-hive-01.job"></a>1.1. az-hive-01.job</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type: hive </span><br><span class="line">azk.hive.action: execute.query</span><br><span class="line">hive.script: sql/az-hive-01.sql</span><br><span class="line">hiveconf.tb: test.action_log</span><br><span class="line">hiveconf.rows: 5</span><br></pre></td></tr></table></figure>
+<ul>
+<li>hiveconf.xxx 指定需要传入sql的参数设置，sql文件内用${hiveconf:xx} 表示</li>
+</ul>
+<h4 id="1-2-az-java-03-job"><a href="#1-2-az-java-03-job" class="headerlink" title="1.2. az-java-03.job"></a>1.2. az-java-03.job</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type=javaprocess</span><br><span class="line">classpath=./lib/*</span><br><span class="line">java.class=nick.weixx.az.run.MyJavaJob</span><br></pre></td></tr></table></figure>
+<ul>
+<li>java任务，指定运行的main class</li>
+</ul>
+<h4 id="1-3-az-shell-02-job"><a href="#1-3-az-shell-02-job" class="headerlink" title="1.3. az-shell-02.job"></a>1.3. az-shell-02.job</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type: command</span><br><span class="line">command: sh ./script/az-comm-01.sh</span><br><span class="line">dependencies: az-hive-01,az-java-03</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行shell 脚本，dependencies,表示需要等待，hive以及java任务执行成功后，执行。</li>
+</ul>
+<h3 id="2-打包运行"><a href="#2-打包运行" class="headerlink" title="2. 打包运行"></a>2. 打包运行</h3><h4 id="2-1-打zip包，并上传"><a href="#2-1-打zip包，并上传" class="headerlink" title="2.1. 打zip包，并上传"></a>2.1. 打zip包，并上传</h4><p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-demo-2.png" alt="Alt text"></p>
+<h4 id="2-2-设定任务"><a href="#2-2-设定任务" class="headerlink" title="2.2. 设定任务"></a>2.2. 设定任务</h4><p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-demo-3.png" alt="Alt text"></p>
+<p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-demo-4.png" alt="Alt text"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">frame</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/02/azkaban-demo-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-azkaban-build-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1215,99 +1310,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/12/23/guava-evenbus/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-os-command" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/14/os-command/">系统命令</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/14/os-command/" class="archive-article-date">
-  	<time datetime="2017-11-14T13:17:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="netstat-tcp连接"><a href="#netstat-tcp连接" class="headerlink" title="netstat tcp连接"></a>netstat tcp连接</h2><p>Netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态 (Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等等。</p>
-<p>从整体上看，netstat的输出结果可以分为两个部分：</p>
-<p>一个是Active Internet connections，称为有源TCP连接，其中”Recv-Q”和”Send-Q”指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。</p>
-<p>另一个是Active UNIX domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。<br>Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。</p>
-<h3 id="1-常见参数"><a href="#1-常见参数" class="headerlink" title="1.常见参数"></a>1.常见参数</h3><ul>
-<li>-a (all)显示所有选项，默认不显示LISTEN相关</li>
-<li>-t (tcp)仅显示tcp相关选项</li>
-<li>-u (udp)仅显示udp相关选项</li>
-<li>-n 拒绝显示别名，能显示数字的全部转化成数字。</li>
-<li>-l 仅列出有在 Listen (监听) 的服務状态</li>
-<li>-p 显示建立相关链接的程序名</li>
-<li>-r 显示路由信息，路由表</li>
-<li>-e 显示扩展信息，例如uid等</li>
-<li>-s 按各个协议进行统计</li>
-<li>-c 每隔一个固定时间，执行该netstat命令。<br>提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</li>
-</ul>
-<h2 id="iftop-网络监控"><a href="#iftop-网络监控" class="headerlink" title="iftop 网络监控"></a>iftop 网络监控</h2><h2 id="iostat-磁盘负载"><a href="#iostat-磁盘负载" class="headerlink" title="iostat 磁盘负载"></a>iostat 磁盘负载</h2><h2 id="top-命令"><a href="#top-命令" class="headerlink" title="top 命令"></a>top 命令</h2><h2 id="redis-命令"><a href="#redis-命令" class="headerlink" title="redis 命令"></a>redis 命令</h2><p>CLIENT LIST  客户端连接</p>
-<p>CONFIG GET maxclients 最大连接数</p>
-<p>INFO clients 客户端统计信息</p>
-<p>CLUSTER SLOTS 分片信息</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">frame</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/14/os-command/">展开全文 >></a>
         </p>
       
 

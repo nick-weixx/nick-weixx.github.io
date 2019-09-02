@@ -158,6 +158,90 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-spring-aop-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/spring-aop-1/">spring AOP 获取目标方法参数</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/25/spring-aop-1/" class="archive-article-date">
+  	<time datetime="2017-06-25T10:46:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="获取目标方法的信息"><a href="#获取目标方法的信息" class="headerlink" title="获取目标方法的信息"></a>获取目标方法的信息</h2><h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><p>访问目标方法最简单的做法是定义增强处理方法时，将第一个参数定义为JoinPoint类型，当该增强处理方法被调用时，该JoinPoint参数就代表了织入增强处理的连接点。JoinPoint里包含了如下几个常用的方法：</p>
+<p>Object[] getArgs：返回目标方法的参数</p>
+<p>Signature getSignature：返回目标方法的签名</p>
+<p>Object getTarget：返回被织入增强处理的目标对象</p>
+<p>Object getThis：返回AOP框架为目标对象生成的代理对象</p>
+<p>中定义了Before、Around、AfterReturning 3个增强处理，并分别在3种增强处理中访问被织入增强处理的目标方法、目标方法的参数和被织入增强处理的目标对象等：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 方法调用之前 aop:before</span><br><span class="line"> * </span><br><span class="line"> * @param join</span><br><span class="line"> */</span><br><span class="line">public void befor(JoinPoint point) &#123;</span><br><span class="line">	 log.info(String.format(&quot;begin func: %s ,param: %s&quot;, point.getSignature().getDeclaringTypeName() + </span><br><span class="line">                &quot;.&quot; + point.getSignature().getName(),point.getArgs()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * around 调用前后</span><br><span class="line"> * o</span><br><span class="line"> * @param point</span><br><span class="line"> * @return</span><br><span class="line"> * @throws Throwable</span><br><span class="line"> */</span><br><span class="line">public Object paramProcess(ProceedingJoinPoint point) throws Throwable &#123;</span><br><span class="line">	// 访问目标方法的参数处理</span><br><span class="line">	Object[] args = point.getArgs();</span><br><span class="line">	// 用改变后的参数执行目标方法</span><br><span class="line">	Object returnValue = point.proceed(args);</span><br><span class="line">	System.out.println(&quot;@Around：执行目标方法之后...&quot;);</span><br><span class="line">	System.out.println(&quot;@Around：被织入的目标对象为：&quot; + point.getTarget());</span><br><span class="line">	return &quot;原返回值：&quot; + returnValue + &quot;，这是返回结果的后缀&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 方法调用之后处理</span><br><span class="line"> */</span><br><span class="line">public void end(JoinPoint point) &#123;</span><br><span class="line">	 log.info(String.format(&quot;end func: %s ,param: %s&quot;, point.getTarget(),point.getArgs()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###目标方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">package com.xxx.test</span><br><span class="line">public class TargetFun&#123;</span><br><span class="line">	public void getData1()&#123;</span><br><span class="line">		System.out.println(&quot;我是目标方法.....&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置部分"><a href="#配置部分" class="headerlink" title="配置部分"></a>配置部分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;bean name=&quot;aopInter&quot; class=&quot;com.xxx.aop.Interceptor&quot; /&gt;</span><br><span class="line">	&lt;aop:config&gt;</span><br><span class="line">		&lt;aop:aspect ref=&quot;aopInter&quot;&gt;</span><br><span class="line">			 &lt;aop:around method=&quot;paramProcess&quot; pointcut=&quot;execution(* com.xxx.test.*.getData*(..)) /&gt; </span><br><span class="line">			&lt;aop:before method=&quot;befor&quot;</span><br><span class="line">				pointcut=&quot;execution(* com.xxx.test.*.getData*(..))&quot; /&gt;</span><br><span class="line">			&lt;aop:after-returning method=&quot;end&quot;</span><br><span class="line">				pointcut=&quot;execution(* com.xxx.test.*.getData*(..))&quot;  /&gt; </span><br><span class="line">		&lt;/aop:aspect&gt;</span><br><span class="line">	&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ClassPathXmlApplicationContext context = null;</span><br><span class="line">TargetFun targetFun = null;</span><br><span class="line"></span><br><span class="line">@Before</span><br><span class="line">public void init() &#123;</span><br><span class="line">	String[] configs = &#123; &quot;classpath:spring/spring-platform-xxx.xml&quot; &#125;;</span><br><span class="line">	context = new ClassPathXmlApplicationContext(configs);</span><br><span class="line">	targetFun = (TargetFun) context.getBean(&quot;test&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">public void testAopParam() &#123;</span><br><span class="line">	targetFun. getData1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">frame</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/25/spring-aop-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-solr-language-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
