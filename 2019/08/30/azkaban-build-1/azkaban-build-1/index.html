@@ -11,10 +11,11 @@
   <meta name="description" content="azkaban 环境搭建，插件安装，简单demo，功能演示。 一. azkaban 环境搭建1.  azkaban 代码编译 打开 azkaban 源码地址,将代码下载下来。 1234567 ## 选择自己适合的版本，我选的 3.49.0版本，azkaban高版本与 azkaban插件(3.0)不兼容git clone https:&#x2F;&#x2F;github.com&#x2F;azkab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="azkaban 环境搭建">
-<meta property="og:url" content="https://nick-weixx.github.io/github.io/2019/08/30/azkaban-build-1/index.html">
+<meta property="og:url" content="https://nick-weixx.github.io/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/index.html">
 <meta property="og:site_name" content="博客">
 <meta property="og:description" content="azkaban 环境搭建，插件安装，简单demo，功能演示。 一. azkaban 环境搭建1.  azkaban 代码编译 打开 azkaban 源码地址,将代码下载下来。 1234567 ## 选择自己适合的版本，我选的 3.49.0版本，azkaban高版本与 azkaban插件(3.0)不兼容git clone https:&#x2F;&#x2F;github.com&#x2F;azkab">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-1.png">
+<meta property="og:image" content="https://nick-weixx.github.io/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/azkaban-build-1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-3.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-4.png">
@@ -23,7 +24,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-7.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-8.png">
 <meta property="article:published_time" content="2019-08-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-09-02T06:09:27.015Z">
+<meta property="article:modified_time" content="2020-06-28T06:34:50.034Z">
 <meta property="article:author" content="nick">
 <meta property="article:tag" content="frame">
 <meta name="twitter:card" content="summary">
@@ -169,7 +170,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-azkaban-build-1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-azkaban-build-1/azkaban-build-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -181,7 +182,7 @@
   
 
         
-        <a href="/2019/08/30/azkaban-build-1/" class="archive-article-date">
+        <a href="/2019/08/30/azkaban-build-1/azkaban-build-1/" class="archive-article-date">
   	<time datetime="2019-08-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-30</time>
 </a>
         
@@ -197,7 +198,7 @@
 <li><p>编译代码(azkaban 用的是gradle进行的项目构建管理)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##没装gradle的，使用下面命令跳过测试构建环境</span><br><span class="line">.&#x2F;gradlew clean build  -x test</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>编译包获取<br><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-1.png" alt="Alt text"></p>
+<li><p>编译包获取<br><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-1.png" alt="Alt text"><br><img src="/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/azkaban-build-1.png" alt></p>
 </li>
 </ul>
 <p>这个包只能安装到linux环境，因为exection调用了linux /proc/loadavg 与 /proc/meminfo 等命令。</p>
@@ -212,7 +213,7 @@
 <li>配置环境变量(/etc/profile)</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME&#x3D;&#x2F;opt&#x2F;cloudera&#x2F;parcels&#x2F;CDH-5.15.2-1.cdh5.15.2.p0.3</span><br><span class="line">export HADOOP_CONF_DIR&#x3D;&#x2F;etc&#x2F;hadoop&#x2F;conf</span><br></pre></td></tr></table></figure>
-<font color='red'>注意: 一定要配置，否则下面的hdfs-viewer插件，将无法使用。</font> 
+<font color="red">注意: 一定要配置，否则下面的hdfs-viewer插件，将无法使用。</font> 
 
 <ul>
 <li><p>解压文件</p>
@@ -244,7 +245,7 @@
 <li>编译代码（azkaban-plugins 用的是ant进行的项目构建管理）</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd azkaban-plugins</span><br><span class="line">ant</span><br></pre></td></tr></table></figure>
-<font color='red'>注意：在更目录下，修改build.xml文件，注释掉 pigvisualizer 引用</font>
+<font color="red">注意：在更目录下，修改build.xml文件，注释掉 pigvisualizer 引用</font>
 
 <p><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-3.png" alt="Alt text"></p>
 <ul>
@@ -378,7 +379,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://nick-weixx.github.io/github.io/2019/08/30/azkaban-build-1/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://nick-weixx.github.io/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/" alt="微信分享二维码">
     </div>
 </div>
 
