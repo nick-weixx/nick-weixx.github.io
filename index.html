@@ -305,9 +305,10 @@
 <li><p>编译代码(azkaban 用的是gradle进行的项目构建管理)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##没装gradle的，使用下面命令跳过测试构建环境</span><br><span class="line">.&#x2F;gradlew clean build  -x test</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>编译包获取<br><img src="https://raw.githubusercontent.com/nick-weixx/nick-weixx.github.io/master/img/azkaban-build-1.png" alt="Alt text"><br><img src="/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/azkaban-build-1.png" alt></p>
+<li><p>编译包获取</p>
 </li>
 </ul>
+<p><img src="/github.io/2019/08/30/azkaban-build-1/azkaban-build-1/azkaban-build-1.png" alt></p>
 <p>这个包只能安装到linux环境，因为exection调用了linux /proc/loadavg 与 /proc/meminfo 等命令。</p>
 <ul>
 <li>mac 环境下需要修改azkaban.execapp.ServerStatisticsServlet 类，将判断条件去掉</li>
