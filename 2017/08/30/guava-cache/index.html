@@ -194,10 +194,10 @@
 <p>配置项：</p>
 <p>maximumSize： 最大添加数量，设置为10W</p>
 <p>expireAfterAccess：1分钟内没有被重写，则清理</p>
-<h2 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h2><p>所有类型的Guava Cache，不管有没有自动加载功能，都支持get(K, Callable<V>)方法。这个方法返回缓存中相应的值，或者用给定的Callable运算并把结果加入到缓存中。在整个加载方法完成前，缓存项相关的可观察状态都不会更改。这个方法简便地实现了模式”如果有缓存则返回；否则运算、缓存、然后返回”。</p>
+<h2 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h2><p>所有类型的Guava Cache，不管有没有自动加载功能，都支持get(K, Callable<V>)方法。这个方法返回缓存中相应的值，或者用给定的Callable运算并把结果加入到缓存中。在整个加载方法完成前，缓存项相关的可观察状态都不会更改。这个方法简便地实现了模式”如果有缓存则返回；否则运算、缓存、然后返回”。</V></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">	pctmapping.get(column, new Callable&lt;RatioItem&gt;() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public RatioItem call() throws Exception &#123;</span><br><span class="line">			RatioItem ratioItem&#x3D;new RatioItem();</span><br><span class="line">			ratioItem.setTargetName(&quot;UNKNOW&quot;);</span><br><span class="line">			return ratioItem;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125; catch (ExecutionException e) &#123;</span><br><span class="line">	&#x2F;&#x2F; TODO Auto-generated catch block</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>显式插入(不推荐)</p>
-<p>使用cache.put(key, value)方法可以直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值。使用Cache.asMap()视图提供的任何方法也能修改缓存。但请注意，asMap视图的任何方法都不能保证缓存项被原子地加载到缓存中。进一步说，asMap视图的原子运算在Guava Cache的原子加载范畴之外，所以相比于Cache.asMap().putIfAbsent(K,V)，Cache.get(K, Callable<V>) 应该总是优先使用。</p>
+<p>使用cache.put(key, value)方法可以直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值。使用Cache.asMap()视图提供的任何方法也能修改缓存。但请注意，asMap视图的任何方法都不能保证缓存项被原子地加载到缓存中。进一步说，asMap视图的原子运算在Guava Cache的原子加载范畴之外，所以相比于Cache.asMap().putIfAbsent(K,V)，Cache.get(K, Callable<V>) 应该总是优先使用。</V></p>
 <h2 id="缓存回收"><a href="#缓存回收" class="headerlink" title="缓存回收"></a>缓存回收</h2><p>cache提供了三种基本的缓存回收方式：基于容量回收、定时回收和基于引用回收</p>
 <h3 id="基于容量的回收（size-based-eviction）"><a href="#基于容量的回收（size-based-eviction）" class="headerlink" title="基于容量的回收（size-based eviction）"></a>基于容量的回收（size-based eviction）</h3><p>如果要规定缓存项的数目不超过固定值，只需使用CacheBuilder.maximumSize(long)。缓存将尝试回收最近没有使用或总体上很少使用的缓存项。</p>
 <ul>
@@ -312,11 +312,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/22/guava-collections/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/09/22/guava-cllections2/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          guava 新集合类型
+          guava 新集合类型2
         
       </div>
     </a>

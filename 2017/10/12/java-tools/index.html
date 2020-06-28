@@ -187,11 +187,11 @@
       
         <h2 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h2><p>jmap是一个可以输出所有内存中对象的工具，甚至可以将VM 中的heap，以二进制输出成文本。打印出某个java进程（使用pid）内存内的，所有‘对象’的情况（如：产生那些对象，及其数量）。</p>
 <h3 id="1，options："><a href="#1，options：" class="headerlink" title="1，options："></a>1，options：</h3><ul>
-<li><p>jmap [option] <pid> (to connect to running proces)通过进程id获取，获取VM的堆信息</p>
+<li><p>jmap [option] <pid> (to connect to running proces)通过进程id获取，获取VM的堆信息</pid></p>
 </li>
-<li><p>jmap [option] <executable <core> (to connect to a core file) </p>
+<li><p>jmap [option] <executable <core> (to connect to a core file) </executable></p>
 </li>
-<li><p>jmap [option] [server_id@]<remote server IP or hostname>(to connect to remote debug server) 远程debug服务的主机名或ip</p>
+<li><p>jmap [option] [server_id@]<remote server ip or hostname>(to connect to remote debug server) 远程debug服务的主机名或ip</remote></p>
 </li>
 </ul>
 <h3 id="2，基本参数："><a href="#2，基本参数：" class="headerlink" title="2，基本参数："></a>2，基本参数：</h3><ul>
@@ -201,7 +201,7 @@
 <li><p>-clstats 打印被加载的静态变量 </p>
 </li>
 <li>-finalizerinfo 打印正等候回收的对象的信息</li>
-<li>-dump:<dump-options> 使用hprof二进制形式,输出jvm的heap内容到文件</li>
+<li>-dump:<dump-options> 使用hprof二进制形式,输出jvm的heap内容到文件</dump-options></li>
 </ul>
 <p>例1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 打印pid为13816进程的，所有jedis对象</span><br><span class="line">jmap -histo 20326 |grep jedis</span><br></pre></td></tr></table></figure>
